@@ -59,7 +59,7 @@
   --content-max: 900px;
   --gutter: 16px;
   --tap: 44px;
-  --nav-h: calc(2 * var(--tap) + 2 * var(--space-1) + 1px); /* two rows on phones */
+  --nav-h: 56px;
 
   color-scheme: dark;
 }
@@ -217,80 +217,41 @@ a { color: var(--accent); }
   border-block-end: 1px solid var(--border);
   box-shadow: var(--shadow-header);
 }
-/* Phones: two rows – short title + controls, then the tabs across the full width.
-   From 600px everything sits in one row (see Responsive). */
 .topnav-inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  grid-template-areas:
-    "brand controls"
-    "links links";
+  display: flex;
   align-items: center;
-  column-gap: var(--space-2);
-  padding-block: var(--space-1);
-}
-.topnav-brand {
-  grid-area: brand;
-  overflow: hidden;
-  color: var(--hero-title);
-  font-weight: 800;
-  line-height: var(--tap);
-  text-decoration: none;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  gap: var(--space-2);
+  min-height: var(--nav-h);
 }
 .topnav-links {
-  grid-area: links;
   display: flex;
+  flex: 1;
   min-width: 0;
+  gap: var(--space-1);
   overflow-x: auto;
   scrollbar-width: none;
   white-space: nowrap;
 }
 .topnav-links::-webkit-scrollbar { display: none; }
-.topnav-links li {
-  display: flex;
-  flex: 1 0 auto;
-  justify-content: center;
-}
 .topnav-links a {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  min-width: var(--tap);
   min-height: var(--tap);
-  padding-inline: var(--space-2);
+  padding-inline: var(--space-3);
   border-radius: var(--radius-pill);
   color: var(--text-muted);
   font-size: var(--fs-sm);
   font-weight: 500;
   text-decoration: none;
 }
-@media (max-width: 359px) {
-  .topnav-links a { padding-inline: var(--space-1); } /* lets five tabs fit at 320px */
-}
-.topnav-links a:focus-visible { outline-offset: -3px; }
 .topnav-links a[aria-current] {
   background: var(--nav-active-bg);
   color: var(--accent);
   font-weight: 700;
 }
-/* Soft fade on the side that has more tabs to scroll to (set by app.js; RTL: start = right) */
-.topnav-links.fade-end {
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 2.5rem);
-  mask-image: linear-gradient(to right, transparent, #000 2.5rem);
-}
-.topnav-links.fade-start {
-  -webkit-mask-image: linear-gradient(to left, transparent, #000 2.5rem);
-  mask-image: linear-gradient(to left, transparent, #000 2.5rem);
-}
-.topnav-links.fade-start.fade-end {
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 2.5rem, #000 calc(100% - 2.5rem), transparent);
-  mask-image: linear-gradient(to right, transparent, #000 2.5rem, #000 calc(100% - 2.5rem), transparent);
-}
 .topnav-controls {
-  grid-area: controls;
   display: flex;
+  flex-shrink: 0;
   gap: var(--space-1);
 }
 .icon-btn {
@@ -520,18 +481,8 @@ main { padding-block: var(--space-4) var(--space-6); }
    Responsive
    ========================================================= */
 @media (min-width: 600px) {
-  :root { --gutter: 24px; --nav-h: 56px; }
-  .topnav-inner {
-    display: flex;
-    gap: var(--space-2);
-    min-height: var(--nav-h);
-    padding-block: 0;
-  }
-  .topnav-brand { display: none; }
-  .topnav-links { flex: 1; gap: var(--space-1); }
-  .topnav-links li { flex: 0 0 auto; }
-  .topnav-links a { padding-inline: var(--space-3); font-size: var(--fs-base); }
-  .topnav-controls { flex-shrink: 0; }
+  :root { --gutter: 24px; }
+  .topnav-links a { font-size: var(--fs-base); }
 }
 
 @media (min-width: 900px) {

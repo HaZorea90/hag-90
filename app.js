@@ -182,6 +182,10 @@ async function loadFallback() {
 }
 
 async function loadData() {
+  // No sheet linked yet: data.json is the source itself, not a fallback.
+  if (Object.values(CONFIG.tabs).some((url) => !url)) {
+    return { tabs: await loadFallback(), fromFallback: false };
+  }
   try {
     return { tabs: await loadFromSheet(), fromFallback: false };
   } catch (err) {

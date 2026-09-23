@@ -12,3 +12,6 @@ CLAUDE.md
 *.xls
 *.ods
 *.csv
+
+# Source artwork (the site uses the resized files)
+logo.jpeg

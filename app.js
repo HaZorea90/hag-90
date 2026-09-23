@@ -427,6 +427,26 @@ function initScrollSpy() {
   });
 }
 
+// Fades the edge of the tab strip that has more tabs to scroll to (only when the tabs don't fit).
+function initNavFade() {
+  const nav = document.getElementById('nav-links');
+  const update = () => {
+    const max = nav.scrollWidth - nav.clientWidth;
+    const x = Math.abs(nav.scrollLeft); // RTL scrollLeft runs from 0 towards negative
+    nav.classList.toggle('fade-start', max > 1 && x > 1);
+    nav.classList.toggle('fade-end', max > 1 && x < max - 1);
+  };
+  nav.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  if ('ResizeObserver' in window) {
+    const ro = new ResizeObserver(update); // the strip and each tab (tabs widen with the text size)
+    ro.observe(nav);
+    nav.querySelectorAll('li').forEach((li) => ro.observe(li));
+  }
+  if (document.fonts) document.fonts.ready.then(update); // tab widths change once Heebo loads
+  update();
+}
+
 /* ---------- Boot ---------- */
 
 async function main() {
@@ -447,6 +467,7 @@ async function main() {
     return;
   }
   initScrollSpy();
+  initNavFade();
 
   // Re-apply a #hash jump now that the sections exist.
   if (location.hash) {

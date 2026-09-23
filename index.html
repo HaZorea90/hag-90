@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="he" dir="rtl" data-theme="dark" data-size="0">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>חג הקיבוץ – 90 שנה להזורע</title>
+  <meta name="description" content="התוכנייה של חג הקיבוץ: 90 שנה להזורע. יום שישי 2.10.2026, 20:30, האולם.">
+  <meta name="theme-color" content="#0d141b">
+  <meta name="color-scheme" content="dark light">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="he_IL">
+  <meta property="og:title" content="חג הקיבוץ – 90 שנה להזורע">
+  <meta property="og:description" content="התוכנייה המלאה: סדר ההופעות, המשתתפים ומילות השירים.">
+  <meta property="og:url" content="https://hazorea90.github.io/hag-90/">
+  <meta property="og:image" content="https://hazorea90.github.io/hag-90/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Apply saved preferences before first paint to avoid a flash of the wrong mode/size -->
+  <script>
+    try {
+      var d = document.documentElement;
+      var t = localStorage.getItem('hz90-theme');
+      var s = localStorage.getItem('hz90-size');
+      if (t === 'light' || t === 'dark') d.dataset.theme = t;
+      if (s === '0' || s === '1' || s === '2') d.dataset.size = s;
+    } catch (e) {}
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#program">דלגו לתוכנייה</a>
+
+  <header class="hero" id="top">
+    <div class="container hero-inner">
+      <div class="hero-logo" id="hero-logo" hidden></div>
+      <h1 class="hero-title" id="hero-title">חג הקיבוץ</h1>
+      <p class="hero-subtitle" id="hero-subtitle">90 שנה להזורע</p>
+      <p class="hero-meta">
+        <span id="hero-date">יום שישי, 2.10.2026</span>
+        <span class="hero-sep" aria-hidden="true">·</span>
+        <span id="hero-time">20:30</span>
+        <span class="hero-sep" aria-hidden="true">·</span>
+        <span id="hero-place">האולם</span>
+      </p>
+    </div>
+  </header>
+
+  <nav class="topnav" aria-label="ניווט בתוכנייה">
+    <div class="container topnav-inner">
+      <ul class="topnav-links" id="nav-links">
+        <li><a href="#program">תוכנייה</a></li>
+        <li><a href="#participants">משתתפים</a></li>
+        <li><a href="#team">צוות</a></li>
+        <li><a href="#thanks">תודות</a></li>
+        <li><a href="#lyrics">מילים</a></li>
+      </ul>
+      <div class="topnav-controls">
+        <button type="button" class="icon-btn" id="size-toggle" aria-label="גודל טקסט: רגיל. לחצו להגדלה">
+          <span aria-hidden="true" class="size-glyph">א<span>א</span></span>
+        </button>
+        <button type="button" class="icon-btn" id="theme-toggle" aria-label="מעבר למצב בהיר">
+          <svg class="icon-sun" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+            <circle cx="12" cy="12" r="4.5" fill="currentColor"/>
+            <g stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/>
+            </g>
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+            <path fill="currentColor" d="M20.5 14.6A8.5 8.5 0 0 1 9.4 3.5a.6.6 0 0 0-.8-.7A9.5 9.5 0 1 0 21.2 15.4a.6.6 0 0 0-.7-.8z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main" class="container">
+    <p class="notice" id="notice" role="status" hidden>מציג גרסה שמורה</p>
+    <p class="loading" id="loading">טוענים את התוכנייה…</p>
+
+    <section class="section" id="program" aria-labelledby="program-h" hidden>
+      <h2 id="program-h">תוכנייה</h2>
+      <ol class="card-list" id="program-list"></ol>
+    </section>
+
+    <section class="section" id="participants" aria-labelledby="participants-h" hidden>
+      <h2 id="participants-h">משתתפים</h2>
+      <ul class="card-list" id="participants-list"></ul>
+    </section>
+
+    <section class="section" id="team" aria-labelledby="team-h" hidden>
+      <h2 id="team-h">צוות והפקה</h2>
+      <div class="team-grid" id="team-list"></div>
+    </section>
+
+    <section class="section" id="thanks" aria-labelledby="thanks-h" hidden>
+      <h2 id="thanks-h">תודות</h2>
+      <div class="thanks-body card" id="thanks-body"></div>
+    </section>
+
+    <section class="section" id="lyrics" aria-labelledby="lyrics-h" hidden>
+      <h2 id="lyrics-h">מילים</h2>
+      <ul class="card-list card-list--single" id="lyrics-list"></ul>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>חג שמח, הזורע!</p>
+      <a class="to-top" href="#top">חזרה למעלה</a>
+    </div>
+  </footer>
+</body>
+</html>

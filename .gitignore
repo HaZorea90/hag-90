@@ -2,3 +2,13 @@
 .mcp.json
 .claude/settings.local.json
 node_modules/
+
+# Internal project docs – kept locally, not published
+SPEC.md
+CLAUDE.md
+
+# Never publish spreadsheets (the working sheet holds private data)
+*.xlsx
+*.xls
+*.ods
+*.csv

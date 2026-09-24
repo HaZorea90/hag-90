@@ -440,17 +440,25 @@ main { padding-block: var(--space-4) var(--space-6); }
 .tag--play  { --tag-bg: var(--tag-play-bg);  --tag-fg: var(--tag-play-fg); }
 .tag--other { --tag-bg: var(--tag-other-bg); --tag-fg: var(--tag-other-fg); }
 
-/* The program number takes its type's color, as in the Stitch screens */
-.program-head:has(.tag--film)  { --num-color: var(--tag-film-ink); }
-.program-head:has(.tag--song)  { --num-color: var(--tag-song-ink); }
-.program-head:has(.tag--dance) { --num-color: var(--tag-dance-ink); }
-.program-head:has(.tag--rap)   { --num-color: var(--tag-rap-ink); }
-.program-head:has(.tag--play)  { --num-color: var(--tag-play-ink); }
-.program-head:has(.tag--other) { --num-color: var(--tag-other-ink); }
+/* Program numbers take their type's color, as in the Stitch screens (program and participants) */
+.num--film  { --num-color: var(--tag-film-ink); }
+.num--song  { --num-color: var(--tag-song-ink); }
+.num--dance { --num-color: var(--tag-dance-ink); }
+.num--rap   { --num-color: var(--tag-rap-ink); }
+.num--play  { --num-color: var(--tag-play-ink); }
+.num--other { --num-color: var(--tag-other-ink); }
 
 /* Participants */
 .participants-head { display: flex; align-items: center; gap: var(--space-2); }
 .participants-head .card-title { flex: 1; min-width: 0; }
+.participants-num {
+  flex-shrink: 0;
+  min-width: 1.75rem;
+  color: var(--num-color, var(--accent));
+  font-size: var(--fs-md);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
 .count {
   flex-shrink: 0;
   min-width: 2rem;

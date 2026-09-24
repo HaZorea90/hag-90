@@ -222,7 +222,7 @@ function programNum(className, order, type) {
 }
 
 function personText(p) {
-  return p.role ? `${p.name} – ${p.role}` : p.name;
+  return p.role ? `${p.name} - ${p.role}` : p.name;
 }
 
 // Builds an accordion card: <li><hN><button aria-expanded>head</button></hN><div panel hidden/></li>.
@@ -261,7 +261,7 @@ function renderHeader(settings) {
   set('hero-place', settings.place);
   if (settings.thanks_title) document.getElementById('thanks-h').textContent = settings.thanks_title;
   if (settings.title || settings.subtitle) {
-    document.title = [settings.title, settings.subtitle].filter(Boolean).join(' – ');
+    document.title = [settings.title, settings.subtitle].filter(Boolean).join(' - ');
   }
 }
 
@@ -317,7 +317,7 @@ function renderTeam(team) {
     const ul = el('ul', 'name-list');
     for (const p of people) {
       const li = el('li', null, p.name);
-      if (p.role) li.append(el('span', 'role', ` – ${p.role}`));
+      if (p.role) li.append(el('span', 'role', ` - ${p.role}`));
       ul.append(li);
     }
     box.append(ul);

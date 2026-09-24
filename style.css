@@ -30,7 +30,7 @@
   --tag-border: transparent;
 
   /* Typography (html is 18px, so 1rem = 18px) */
-  --font-body: 'Heebo', 'Assistant', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  --font-body: 'Google Sans', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
   --fs-sm: 0.8333rem;   /* 15px label */
   --fs-base: 1rem;      /* 18px body */
   --fs-md: 1.1111rem;   /* 20px card title */
@@ -191,7 +191,7 @@ a { color: var(--accent); }
 }
 .hero-title {
   font-size: var(--fs-hero);
-  font-weight: 800;
+  font-weight: 700; /* Google Sans tops out at 700 */
   line-height: 1.1;
   color: var(--hero-title);
 }
@@ -233,7 +233,7 @@ a { color: var(--accent); }
   min-width: 0;
   overflow: hidden;
   color: var(--hero-title);
-  font-weight: 800;
+  font-weight: 700; /* Google Sans tops out at 700 */
   line-height: var(--tap);
   text-decoration: none;
   text-overflow: ellipsis;
@@ -324,7 +324,7 @@ main { padding-block: var(--space-4) var(--space-6); }
 .section > h2 {
   margin-block-end: var(--space-4);
   font-size: var(--fs-xl);
-  font-weight: 800;
+  font-weight: 700; /* Google Sans tops out at 700 */
   line-height: 1.2;
 }
 

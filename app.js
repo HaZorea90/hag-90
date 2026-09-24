@@ -401,30 +401,52 @@ function initTextSize() {
   });
 }
 
-// Highlights the nav link of the section currently in view, and keeps it visible in the scrollable nav.
+// Highlights the tab of the section being read: the last section whose heading has passed
+// under the top bar, or the last section once the page is scrolled to the end.
 function initScrollSpy() {
-  if (!('IntersectionObserver' in window)) return;
   const nav = document.getElementById('nav-links');
+  const topbar = document.querySelector('.topbar');
   const links = new Map([...nav.querySelectorAll('a')].map((a) => [a.getAttribute('href').slice(1), a]));
+  const sections = [...document.querySelectorAll('main > section')]
+    .filter((s) => links.has(s.id) && !s.hidden);
+  if (!sections.length) return;
+
+  let current = null;
+  let pinned = false; // after a tab tap, keep that tab lit until the reader scrolls by hand
   const setCurrent = (id) => {
+    if (id === current) return;
+    current = id;
     links.forEach((a, key) => {
       if (key === id) a.setAttribute('aria-current', 'true');
       else a.removeAttribute('aria-current');
     });
-    const a = links.get(id);
-    if (!a || nav.scrollWidth <= nav.clientWidth) return;
-    const navBox = nav.getBoundingClientRect();
-    const box = a.getBoundingClientRect();
-    if (box.left < navBox.left) nav.scrollBy({ left: box.left - navBox.left - 16 });
-    else if (box.right > navBox.right) nav.scrollBy({ left: box.right - navBox.right + 16 });
   };
-  const observer = new IntersectionObserver((entries) => {
-    for (const entry of entries) if (entry.isIntersecting) setCurrent(entry.target.id);
-  }, { rootMargin: '-40% 0px -55% 0px' });
-  links.forEach((a, id) => {
-    const section = document.getElementById(id);
-    if (section && !section.hidden) observer.observe(section);
+  const update = () => {
+    if (pinned) return;
+    const line = topbar.getBoundingClientRect().bottom + 32;
+    let id = sections[0].id;
+    for (const s of sections) if (s.getBoundingClientRect().top <= line) id = s.id;
+    const atEnd = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+    setCurrent(atEnd ? sections[sections.length - 1].id : id);
+  };
+
+  nav.addEventListener('click', (e) => {
+    const a = e.target.closest('a');
+    if (!a) return;
+    setCurrent(a.getAttribute('href').slice(1));
+    pinned = true;
   });
+  for (const type of ['wheel', 'touchstart', 'keydown', 'mousedown']) {
+    window.addEventListener(type, () => { pinned = false; }, { passive: true });
+  }
+  let queued = false;
+  window.addEventListener('scroll', () => {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(() => { queued = false; update(); });
+  }, { passive: true });
+  window.addEventListener('resize', update);
+  update();
 }
 
 /* ---------- Boot ---------- */

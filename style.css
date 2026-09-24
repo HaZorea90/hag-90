@@ -54,12 +54,14 @@
   --radius-pill: 999px;
   --shadow-card: 0 1px 2px rgb(0 0 0 / 0.05);
   --shadow-header: 0 4px 20px rgb(0 0 0 / 0.3);
+  --shadow-bottom: 0 -4px 20px rgb(0 0 0 / 0.35);
 
   /* Layout */
   --content-max: 900px;
   --gutter: 16px;
   --tap: 44px;
   --nav-h: 56px;
+  --bottom-nav-h: 64px;
 
   color-scheme: dark;
 }
@@ -91,6 +93,7 @@
 
   --shadow-card: 0 1px 3px rgb(0 0 0 / 0.04);
   --shadow-header: 0 2px 12px rgb(0 0 0 / 0.06);
+  --shadow-bottom: 0 -2px 12px rgb(0 0 0 / 0.06);
 
   color-scheme: light;
 }
@@ -121,6 +124,8 @@ body {
   font-size: var(--fs-base);
   line-height: var(--lh-body);
   overflow-wrap: anywhere;
+  /* keep the end of the page clear of the fixed bottom bar */
+  padding-bottom: calc(var(--bottom-nav-h) + env(safe-area-inset-bottom));
 }
 
 h1, h2, h3, p, ul, ol { margin: 0; }
@@ -205,9 +210,9 @@ a { color: var(--accent); }
 }
 
 /* =========================================================
-   Sticky nav
+   Sticky top bar (title + controls) and fixed bottom tab bar
    ========================================================= */
-.topnav {
+.topbar {
   position: sticky;
   top: 0;
   z-index: 10;
@@ -217,38 +222,72 @@ a { color: var(--accent); }
   border-block-end: 1px solid var(--border);
   box-shadow: var(--shadow-header);
 }
-.topnav-inner {
+.topbar-inner {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: var(--space-2);
   min-height: var(--nav-h);
 }
-.topnav-links {
-  display: flex;
-  flex: 1;
+.topbar-title {
   min-width: 0;
-  gap: var(--space-1);
-  overflow-x: auto;
-  scrollbar-width: none;
+  overflow: hidden;
+  color: var(--hero-title);
+  font-weight: 800;
+  line-height: var(--tap);
+  text-decoration: none;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
-.topnav-links::-webkit-scrollbar { display: none; }
-.topnav-links a {
-  display: inline-flex;
+
+/* Bottom bar: sized in px on purpose – it is app chrome and must fit five tabs at 320px
+   at every text-size level. */
+.bottomnav {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 20;
+  padding-bottom: env(safe-area-inset-bottom);
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border-block-start: 1px solid var(--border);
+  box-shadow: var(--shadow-bottom);
+}
+.bottomnav-links {
+  display: flex;
+  max-width: 600px;
+  margin-inline: auto;
+}
+.bottomnav-links li { flex: 1 1 0; min-width: 0; }
+.bottomnav-links a {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  min-height: var(--tap);
-  padding-inline: var(--space-3);
-  border-radius: var(--radius-pill);
+  justify-content: center;
+  gap: 2px;
+  min-height: var(--bottom-nav-h);
+  padding: 6px 2px;
   color: var(--text-muted);
-  font-size: var(--fs-sm);
+  font-size: 14px;
   font-weight: 500;
+  line-height: 1.2;
   text-decoration: none;
+  white-space: nowrap;
 }
-.topnav-links a[aria-current] {
-  background: var(--nav-active-bg);
-  color: var(--accent);
-  font-weight: 700;
+.bottomnav-links svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
+.bottomnav-links a[aria-current] { color: var(--accent); font-weight: 700; }
+.bottomnav-links a[aria-current] svg { stroke-width: 2.4; }
+.bottomnav-links a:focus-visible { outline-offset: -3px; }
+
 .topnav-controls {
   display: flex;
   flex-shrink: 0;
@@ -482,7 +521,6 @@ main { padding-block: var(--space-4) var(--space-6); }
    ========================================================= */
 @media (min-width: 600px) {
   :root { --gutter: 24px; }
-  .topnav-links a { font-size: var(--fs-base); }
 }
 
 @media (min-width: 900px) {

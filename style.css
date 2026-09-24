@@ -523,6 +523,10 @@ main { padding-block: var(--space-4) var(--space-6); }
   min-height: var(--tap);
   font-weight: 500;
 }
+.credit {
+  margin-block-start: var(--space-3);
+  font-size: var(--fs-sm);
+}
 
 /* =========================================================
    Responsive

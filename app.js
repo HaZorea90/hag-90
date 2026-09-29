@@ -463,11 +463,26 @@ function initScrollSpy() {
   update();
 }
 
+// The top bar is transparent while it sits on the header photo, and solid once it sticks.
+function initTopbar() {
+  const bar = document.querySelector('.topbar');
+  const update = () => bar.classList.toggle('at-rest', bar.getBoundingClientRect().top > 0.5);
+  let queued = false;
+  window.addEventListener('scroll', () => {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(() => { queued = false; update(); });
+  }, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+}
+
 /* ---------- Boot ---------- */
 
 async function main() {
   initTheme();
   initTextSize();
+  initTopbar();
   initAccordions();
 
   const loading = document.getElementById('loading');

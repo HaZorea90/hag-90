@@ -37,28 +37,34 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400..700&display=swap">
   <!-- Bump ?v= whenever style.css or app.js changes, so phones don't mix cached and new files -->
-  <link rel="stylesheet" href="style.css?v=20260924e">
-  <script src="app.js?v=20260924e" defer></script>
+  <link rel="stylesheet" href="style.css?v=20260929a">
+  <script src="app.js?v=20260929a" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#program">דלגו לתוכנייה</a>
 
   <header class="hero" id="top">
+    <img class="hero-bg" src="hero-800.webp" srcset="hero-800.webp 800w, hero-1414.webp 1414w" sizes="100vw"
+         width="800" height="1090" alt="" fetchpriority="high">
     <div class="container hero-inner">
-      <img class="hero-logo" src="logo.webp" width="160" height="160" alt="הסמל של 90 שנה לקיבוץ הזורע">
-      <h1 class="hero-title" id="hero-title">חג הקיבוץ</h1>
-      <p class="hero-subtitle" id="hero-subtitle">90 שנה להזורע</p>
-      <p class="hero-meta">
-        <span id="hero-date">יום שישי, 2.10.2026</span>
-        <span class="hero-sep" aria-hidden="true">·</span>
-        <span id="hero-time">20:30</span>
-        <span class="hero-sep" aria-hidden="true">·</span>
-        <span id="hero-place">האולם</span>
-      </p>
+      <img class="hero-logo" src="logo.webp" width="640" height="512" alt="הסמל של 90 שנה לקיבוץ הזורע">
+      <div class="hero-text">
+        <h1 class="hero-title" id="hero-title">חג הקיבוץ</h1>
+        <p class="hero-subtitle" id="hero-subtitle">90 שנה להזורע</p>
+        <p class="hero-meta">
+          <span id="hero-date">יום שישי, 2.10.2026</span>
+          <span class="hero-sep hero-sep--wide" aria-hidden="true">·</span>
+          <span class="hero-meta-rest">
+            <span id="hero-time">20:30</span>
+            <span class="hero-sep" aria-hidden="true">·</span>
+            <span id="hero-place">האולם</span>
+          </span>
+        </p>
+      </div>
     </div>
   </header>
 
-  <div class="topbar">
+  <div class="topbar at-rest">
     <div class="container topbar-inner">
       <a class="topbar-title" href="#top">חג הקיבוץ · 90</a>
       <div class="topnav-controls">

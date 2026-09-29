@@ -56,6 +56,12 @@
   --shadow-header: 0 4px 20px rgb(0 0 0 / 0.3);
   --shadow-bottom: 0 -4px 20px rgb(0 0 0 / 0.35);
 
+  /* Header photo: text sits on the bright sky, so it uses the logo's navy in both modes */
+  --hero-title-ink: #305078;
+  --hero-ink: #1c2e48;
+  --hero-dim: 0.12; /* dims the photo a little in dark mode (dark hall) */
+  --hero-panel: rgb(212 212 212 / 0.72); /* matches the dimmed sky, so it only shows over the village */
+
   /* Layout */
   --content-max: 900px;
   --gutter: 16px;
@@ -94,6 +100,8 @@
   --shadow-card: 0 1px 3px rgb(0 0 0 / 0.04);
   --shadow-header: 0 2px 12px rgb(0 0 0 / 0.06);
   --shadow-bottom: 0 -2px 12px rgb(0 0 0 / 0.06);
+  --hero-dim: 0;
+  --hero-panel: rgb(255 255 255 / 0.6);
 
   color-scheme: light;
 }
@@ -173,8 +181,29 @@ a { color: var(--accent); }
    Header
    ========================================================= */
 .hero {
-  padding-block: var(--space-6) var(--space-5);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  /* the photo's own proportions on phones, capped on large screens */
+  min-height: min(calc(100vw * 1927 / 1414), 88vh);
+  padding-block: var(--space-5) calc(var(--nav-h) + var(--space-4)); /* the top bar sits over the bottom */
   text-align: center;
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 64%; /* when cropped: keep the lower sky and the village */
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgb(0 0 0 / var(--hero-dim));
 }
 .hero-inner {
   display: flex;
@@ -183,19 +212,29 @@ a { color: var(--accent); }
   gap: var(--space-2);
 }
 .hero-logo {
-  width: clamp(120px, 36vw, 160px);
+  width: clamp(150px, 46vw, 260px);
   height: auto;
-  margin-block-end: var(--space-2);
-  border-radius: 50%;
-  box-shadow: 0 0 0 1px var(--card-border), var(--shadow-header);
+}
+/* Title and date: a soft panel the color of the sky, invisible on the sky itself, that keeps the
+   text readable where it reaches the darker village (small phones, larger text sizes) */
+.hero-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--hero-panel);
+  box-shadow: 0 0 28px 14px var(--hero-panel); /* feathered edges instead of a hard box */
 }
 .hero-title {
   font-size: var(--fs-hero);
   font-weight: 700; /* Google Sans tops out at 700 */
   line-height: 1.1;
-  color: var(--hero-title);
+  color: var(--hero-title-ink);
 }
 .hero-subtitle {
+  color: var(--hero-ink);
   font-size: var(--fs-xl);
   font-weight: 700;
   line-height: 1.2;
@@ -205,8 +244,15 @@ a { color: var(--accent); }
   flex-wrap: wrap;
   justify-content: center;
   gap: 0 var(--space-2);
-  color: var(--text-muted);
+  color: var(--hero-ink);
   font-size: var(--fs-md);
+  font-weight: 500;
+}
+.hero-meta-rest { display: inline-flex; gap: 0 var(--space-2); }
+/* Phones: date on one line, time and place on the next – no dangling separator */
+@media (max-width: 599px) {
+  .hero-meta { flex-direction: column; align-items: center; }
+  .hero-sep--wide { display: none; }
 }
 
 /* =========================================================
@@ -221,7 +267,17 @@ a { color: var(--accent); }
   backdrop-filter: blur(16px);
   border-block-end: 1px solid var(--border);
   box-shadow: var(--shadow-header);
+  margin-block-start: calc(-1 * var(--nav-h));
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
+/* At the top of the page the bar sits on the photo; app.js drops .at-rest once it sticks */
+.topbar.at-rest {
+  background: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: none;
+}
+.topbar.at-rest .topbar-title { visibility: hidden; opacity: 0; }
 .topbar-inner {
   display: flex;
   align-items: center;
@@ -238,6 +294,7 @@ a { color: var(--accent); }
   text-decoration: none;
   text-overflow: ellipsis;
   white-space: nowrap;
+  transition: opacity 0.2s ease;
 }
 
 /* Bottom bar: sized in px on purpose – it is app chrome and must fit five tabs at 320px

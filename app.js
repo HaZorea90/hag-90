@@ -124,8 +124,8 @@ function buildModel(tabs) {
   const programByTitle = new Map(program.map((p) => [p.title, p]));
   const participants = [...bySection.entries()]
     .map(([section, people], idx) => {
-      const item = programByTitle.get(section); // gives the group its program number and type color
-      return { section, people, idx, order: item ? item.order : '', type: item ? item.type : '' };
+      const item = programByTitle.get(section); // gives the group its program number
+      return { section, people, idx, order: item ? item.order : '' };
     })
     .sort((a, b) => rank(a.section) - rank(b.section) || a.idx - b.idx);
 
@@ -216,9 +216,9 @@ function typeClass(type) {
   return `tag tag--${typeKey(type)}`;
 }
 
-// Program number ("01"), colored by the item's type.
-function programNum(className, order, type) {
-  return el('span', `${className} num--${typeKey(type)}`, order ? String(order).padStart(2, '0') : '');
+// Program number ("01"); all numbers share one color (--num-color).
+function programNum(className, order) {
+  return el('span', className, order ? String(order).padStart(2, '0') : '');
 }
 
 function personText(p) {
@@ -269,7 +269,7 @@ function renderProgram(program) {
   const list = document.getElementById('program-list');
   for (const item of program) {
     const head = el('span', 'program-head');
-    head.append(programNum('program-num', item.order, item.type));
+    head.append(programNum('program-num', item.order));
     const main = el('span', 'program-main');
     main.append(el('span', 'card-title', item.title));
     const meta = el('span', 'program-meta');
@@ -294,7 +294,7 @@ function renderParticipants(participants) {
   const list = document.getElementById('participants-list');
   for (const group of participants) {
     const head = el('span', 'participants-head');
-    head.append(programNum('participants-num', group.order, group.type)); // empty for link segments, keeps titles aligned
+    head.append(programNum('participants-num', group.order)); // empty for link segments, keeps titles aligned
     head.append(el('span', 'card-title', group.section));
     const count = el('span', 'count', String(group.people.length));
     count.setAttribute('aria-label', `${group.people.length} משתתפים`);
@@ -388,7 +388,7 @@ function initTheme() {
   const apply = (theme) => {
     root.dataset.theme = theme;
     btn.setAttribute('aria-label', theme === 'dark' ? 'מעבר למצב בהיר' : 'מעבר למצב כהה');
-    meta.setAttribute('content', getComputedStyle(root).getPropertyValue('--bg').trim() || '#0d141b');
+    meta.setAttribute('content', getComputedStyle(root).getPropertyValue('--bg').trim() || '#091120');
   };
   apply(storeGet('hz90-theme') === 'light' ? 'light' : 'dark');
   btn.addEventListener('click', () => {

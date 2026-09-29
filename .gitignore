@@ -16,3 +16,7 @@ CLAUDE.md
 # Source artwork (the site uses the resized/cropped files generated from these)
 logo-source.png
 hero-source.png
+
+# Commercial font sources (Itstrubal needs a webfont license before any font file is published)
+*.otf
+*.ttf

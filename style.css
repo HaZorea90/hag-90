@@ -1,41 +1,45 @@
 /* =========================================================
-   Design tokens – from the Stitch "Hazorea90" screens
-   (dark and light variants). Adjusted for AA where noted.
+   Design tokens – brand palette (coolors: f6f2ea · 94c3bc · 6db0ff · 284e90 · 091120)
+   on the Stitch layout. Every text/background pair is checked for WCAG AA.
    ========================================================= */
 :root {
   /* Dark (default) */
-  --bg: #0d141b;
-  --surface: #151c24;
-  --surface-2: #192028;
-  --surface-3: #242b32;
-  --text: #dce3ed;
-  --text-muted: #bdc8d1;
-  --accent: #81cfff;
-  --accent-contrast: #00344b;
-  --accent-warm: #ffb955;
-  --accent-green: #66bb6a;      /* Stitch #388e3c fails AA on dark */
-  --hero-title: #ffb955;
-  --border: #22364c;
+  --bg: #091120;
+  --surface: #101c33;
+  --surface-2: #15233e;
+  --surface-3: #1d2e4f;
+  --text: #f6f2ea;
+  --text-muted: #b8c2d3;
+  --accent: #6db0ff;
+  --accent-contrast: #091120;
+  --accent-warm: #94c3bc;
+  --accent-alt: #f6f2ea;
+  --hero-title: #94c3bc;
+  --border: #243a5e;
   --card-border: transparent;
-  --nav-active-bg: #0b3c5d;
-  --focus: #ffb955;
+  --nav-active-bg: #1c3563;
+  --focus: #94c3bc;
+  --num-color: #6db0ff; /* all program and participant numbers */
 
-  /* Program types: tag background / tag text / number color */
-  --tag-film-bg: #1f4a6c;  --tag-film-fg: #91b9e0;  --tag-film-ink: #a3cbf2;
-  --tag-song-bg: #d18a00;  --tag-song-fg: #452b00;  --tag-song-ink: #ffb955;
-  --tag-dance-bg: rgb(56 142 60 / 0.2);  --tag-dance-fg: #66bb6a;  --tag-dance-ink: #66bb6a;
-  --tag-rap-bg: #00a3e0;   --tag-rap-fg: #00354b;   --tag-rap-ink: #81cfff;
-  --tag-play-bg: #e67e22;  --tag-play-fg: #2a1700;  --tag-play-ink: #e67e22;
-  --tag-other-bg: #0b3c5d; --tag-other-fg: #cee5ff; --tag-other-ink: #cee5ff;
+  /* Program types: tag background / tag text */
+  --tag-film-bg: #284e90;  --tag-film-fg: #f6f2ea;
+  --tag-song-bg: #94c3bc;  --tag-song-fg: #091120;
+  --tag-dance-bg: rgb(148 195 188 / 0.16); --tag-dance-fg: #94c3bc;
+  --tag-rap-bg: #6db0ff;   --tag-rap-fg: #091120;
+  --tag-play-bg: #f6f2ea;  --tag-play-fg: #284e90;
+  --tag-other-bg: rgb(109 176 255 / 0.16); --tag-other-fg: #9fcaff;
   --tag-border: transparent;
 
   /* Typography (html is 18px, so 1rem = 18px) */
-  --font-body: 'Google Sans', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  --font-body: 'Heebo', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  --font-display: var(--font-body); /* main and section headings */
+  --display-weight: 700;
   --fs-sm: 0.8333rem;   /* 15px label */
   --fs-base: 1rem;      /* 18px body */
   --fs-md: 1.1111rem;   /* 20px card title */
   --fs-lg: 1.3333rem;   /* 24px program number */
-  --fs-xl: 1.7778rem;   /* 32px section heading */
+  --fs-xl: 1.7778rem;   /* 32px hero subtitle */
+  --fs-section: 1.4444rem; /* 26px section headings */
   --fs-hero: clamp(2rem, 9vw, 2.6667rem);
   --fs-lyrics: 1.2222rem; /* 22px */
   --lh-body: 1.55;
@@ -56,10 +60,10 @@
   --shadow-header: 0 4px 20px rgb(0 0 0 / 0.3);
   --shadow-bottom: 0 -4px 20px rgb(0 0 0 / 0.35);
 
-  /* Header photo: text sits on the bright sky, so it uses the logo's navy in both modes */
-  --hero-title-ink: #305078;
-  --hero-ink: #1c2e48;
-  --hero-overlay: rgb(255 255 255 / 0.5);
+  /* Header photo: text sits on the washed sky, in the brand navy and ink in both modes */
+  --hero-title-ink: #284e90;
+  --hero-ink: #091120;
+  --hero-overlay: rgb(246 242 234 / 0.5); /* brand cream wash over the whole photo */
 
   /* Layout */
   --content-max: 900px;
@@ -72,33 +76,34 @@
 }
 
 :root[data-theme="light"] {
-  --bg: #f8fafc;
-  --surface: #ffffff;
-  --surface-2: #f1f5f9;
-  --surface-3: #f1f5f9;
-  --text: #131b2e;
-  --text-muted: #49607e;
-  --accent: #006193;
+  --bg: #f6f2ea;
+  --surface: #fffdf8;
+  --surface-2: #efe9dd;
+  --surface-3: #ebe4d6;
+  --text: #091120;
+  --text-muted: #3f4c63;
+  --accent: #284e90;
   --accent-contrast: #ffffff;
-  --accent-warm: #b45309;       /* Stitch #d97706 passes only as large text */
-  --accent-green: #2e7d32;
-  --hero-title: #006193;
-  --border: #e2e8f0;
-  --card-border: #e2e8f0;
-  --nav-active-bg: #e0f2fe;
-  --focus: #006193;
+  --accent-warm: #2e6b62;       /* the brand sage, darkened for AA on cream */
+  --accent-alt: #091120;
+  --hero-title: #284e90;
+  --border: #e2dbcc;
+  --card-border: #e2dbcc;
+  --nav-active-bg: #dfe9f7;
+  --focus: #284e90;
+  --num-color: #284e90;
 
-  --tag-film-bg: #eaedff;  --tag-film-fg: #49607e;  --tag-film-ink: #49607e;
-  --tag-song-bg: #fef3c7;  --tag-song-fg: #825100;  --tag-song-ink: #b45309;
-  --tag-dance-bg: #e8f5e9; --tag-dance-fg: #2e7d32; --tag-dance-ink: #2e7d32;
-  --tag-rap-bg: #cce5ff;   --tag-rap-fg: #004b73;   --tag-rap-ink: #0369a1;
-  --tag-play-bg: #ffedd5;  --tag-play-fg: #c2410c;  --tag-play-ink: #c2410c;
-  --tag-other-bg: #e0f2fe; --tag-other-fg: #0369a1; --tag-other-ink: #006193;
+  --tag-film-bg: #284e90;  --tag-film-fg: #ffffff;
+  --tag-song-bg: #d5e9e5;  --tag-song-fg: #1f4f48;
+  --tag-dance-bg: #e3eefc; --tag-dance-fg: #1d4a86;
+  --tag-rap-bg: #091120;   --tag-rap-fg: #f6f2ea;
+  --tag-play-bg: #94c3bc;  --tag-play-fg: #091120;
+  --tag-other-bg: #ebe4d6; --tag-other-fg: #3f4c63;
   --tag-border: rgb(0 0 0 / 0.06);
 
-  --shadow-card: 0 1px 3px rgb(0 0 0 / 0.04);
-  --shadow-header: 0 2px 12px rgb(0 0 0 / 0.06);
-  --shadow-bottom: 0 -2px 12px rgb(0 0 0 / 0.06);
+  --shadow-card: 0 1px 3px rgb(9 17 32 / 0.05);
+  --shadow-header: 0 2px 12px rgb(9 17 32 / 0.07);
+  --shadow-bottom: 0 -2px 12px rgb(9 17 32 / 0.07);
 
   color-scheme: light;
 }
@@ -219,15 +224,17 @@ a { color: var(--accent); }
   gap: var(--space-2);
 }
 .hero-title {
+  font-family: var(--font-display);
   font-size: var(--fs-hero);
-  font-weight: 700; /* Google Sans tops out at 700 */
+  font-weight: var(--display-weight);
   line-height: 1.1;
   color: var(--hero-title-ink);
 }
 .hero-subtitle {
   color: var(--hero-ink);
+  font-family: var(--font-display);
   font-size: var(--fs-xl);
-  font-weight: 700;
+  font-weight: var(--display-weight);
   line-height: 1.2;
 }
 .hero-meta {
@@ -280,7 +287,8 @@ a { color: var(--accent); }
   min-width: 0;
   overflow: hidden;
   color: var(--hero-title);
-  font-weight: 700; /* Google Sans tops out at 700 */
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
   line-height: var(--tap);
   text-decoration: none;
   text-overflow: ellipsis;
@@ -317,8 +325,8 @@ a { color: var(--accent); }
   min-height: var(--bottom-nav-h);
   padding: 6px 2px;
   color: var(--text-muted);
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 13px;
+  font-weight: 400;
   line-height: 1.2;
   text-decoration: none;
   white-space: nowrap;
@@ -332,7 +340,7 @@ a { color: var(--accent); }
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-.bottomnav-links a[aria-current] { color: var(--accent); font-weight: 700; }
+.bottomnav-links a[aria-current] { color: var(--accent); font-weight: 500; }
 .bottomnav-links a[aria-current] svg { stroke-width: 2.4; }
 .bottomnav-links a:focus-visible { outline-offset: -3px; }
 
@@ -371,8 +379,9 @@ main { padding-block: var(--space-4) var(--space-6); }
 .section + .section { margin-block-start: var(--space-4); }
 .section > h2 {
   margin-block-end: var(--space-4);
-  font-size: var(--fs-xl);
-  font-weight: 700; /* Google Sans tops out at 700 */
+  font-family: var(--font-display);
+  font-size: var(--fs-section);
+  font-weight: var(--display-weight);
   line-height: 1.2;
 }
 
@@ -452,7 +461,7 @@ main { padding-block: var(--space-4) var(--space-6); }
 .program-num {
   flex-shrink: 0;
   min-width: 2.25rem;
-  color: var(--num-color, var(--accent));
+  color: var(--num-color);
   font-size: var(--fs-lg);
   font-weight: 700;
   line-height: 1.2;
@@ -488,21 +497,13 @@ main { padding-block: var(--space-4) var(--space-6); }
 .tag--play  { --tag-bg: var(--tag-play-bg);  --tag-fg: var(--tag-play-fg); }
 .tag--other { --tag-bg: var(--tag-other-bg); --tag-fg: var(--tag-other-fg); }
 
-/* Program numbers take their type's color, as in the Stitch screens (program and participants) */
-.num--film  { --num-color: var(--tag-film-ink); }
-.num--song  { --num-color: var(--tag-song-ink); }
-.num--dance { --num-color: var(--tag-dance-ink); }
-.num--rap   { --num-color: var(--tag-rap-ink); }
-.num--play  { --num-color: var(--tag-play-ink); }
-.num--other { --num-color: var(--tag-other-ink); }
-
 /* Participants */
 .participants-head { display: flex; align-items: center; gap: var(--space-2); }
 .participants-head .card-title { flex: 1; min-width: 0; }
 .participants-num {
   flex-shrink: 0;
   min-width: 1.75rem;
-  color: var(--num-color, var(--accent));
+  color: var(--num-color);
   font-size: var(--fs-md);
   font-weight: 700;
   font-variant-numeric: tabular-nums;
@@ -541,7 +542,7 @@ main { padding-block: var(--space-4) var(--space-6); }
   font-weight: 700;
 }
 .team-group:nth-child(1) .team-title { color: var(--accent-warm); }
-.team-group:nth-child(2) .team-title { color: var(--accent-green); }
+.team-group:nth-child(2) .team-title { color: var(--accent-alt); }
 
 /* Thanks */
 .thanks-body { display: grid; gap: var(--space-3); padding: var(--space-4); }

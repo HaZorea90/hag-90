@@ -59,8 +59,7 @@
   /* Header photo: text sits on the bright sky, so it uses the logo's navy in both modes */
   --hero-title-ink: #305078;
   --hero-ink: #1c2e48;
-  --hero-dim: 0.12; /* dims the photo a little in dark mode (dark hall) */
-  --hero-panel: rgb(212 212 212 / 0.72); /* matches the dimmed sky, so it only shows over the village */
+  --hero-overlay: rgb(255 255 255 / 0.5);
 
   /* Layout */
   --content-max: 900px;
@@ -100,8 +99,6 @@
   --shadow-card: 0 1px 3px rgb(0 0 0 / 0.04);
   --shadow-header: 0 2px 12px rgb(0 0 0 / 0.06);
   --shadow-bottom: 0 -2px 12px rgb(0 0 0 / 0.06);
-  --hero-dim: 0;
-  --hero-panel: rgb(255 255 255 / 0.6);
 
   color-scheme: light;
 }
@@ -203,7 +200,7 @@ a { color: var(--accent); }
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: rgb(0 0 0 / var(--hero-dim));
+  background: var(--hero-overlay); /* white wash over the whole photo keeps the navy text readable */
 }
 .hero-inner {
   display: flex;
@@ -215,17 +212,11 @@ a { color: var(--accent); }
   width: clamp(150px, 46vw, 260px);
   height: auto;
 }
-/* Title and date: a soft panel the color of the sky, invisible on the sky itself, that keeps the
-   text readable where it reaches the darker village (small phones, larger text sizes) */
 .hero-text {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--space-2);
-  padding: var(--space-2) var(--space-4);
-  border-radius: var(--radius-md);
-  background: var(--hero-panel);
-  box-shadow: 0 0 28px 14px var(--hero-panel); /* feathered edges instead of a hard box */
 }
 .hero-title {
   font-size: var(--fs-hero);

@@ -1,3 +1,12 @@
+/* Heading font: Itstrubal (איצטרובל) by Amir Gelbard / Fontimonim, used under the user's webfont
+   license (confirmed 2026-09-29). Only this WOFF2 is published; the source .otf stays local. */
+@font-face {
+  font-family: 'Itstrubal';
+  src: url('fonts/itstrubal.woff2') format('woff2');
+  font-weight: 500;
+  font-display: swap;
+}
+
 /* =========================================================
    Design tokens – brand palette (coolors: f6f2ea · 94c3bc · 6db0ff · 284e90 · 091120)
    on the Stitch layout. Every text/background pair is checked for WCAG AA.
@@ -32,8 +41,8 @@
 
   /* Typography (html is 18px, so 1rem = 18px) */
   --font-body: 'Heebo', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
-  --font-display: var(--font-body); /* main and section headings */
-  --display-weight: 700;
+  --font-display: 'Itstrubal', var(--font-body); /* main and section headings */
+  --display-weight: 500;  /* the font's only weight – avoids faux bold */
   --fs-sm: 0.8333rem;   /* 15px label */
   --fs-base: 1rem;      /* 18px body */
   --fs-md: 1.1111rem;   /* 20px card title */

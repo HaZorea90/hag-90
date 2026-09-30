@@ -13,6 +13,11 @@ CLAUDE.md
 *.ods
 *.csv
 
+# Working documents from the production team (tables, drafts)
+*.docx
+*.doc
+*.pdf
+
 # Source artwork (the site uses the resized/cropped files generated from these)
 logo-source.png
 hero-source.png

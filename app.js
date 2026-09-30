@@ -10,7 +10,6 @@ const CONFIG = {
   "tabs": {
     "settings": "",
     "program": "",
-    "participants": "",
     "team": "",
     "thanks": "",
     "lyrics": ""
@@ -21,15 +20,7 @@ const CONFIG = {
 /* CONFIG-END */
 
 const TEAM_GROUPS = ['צוות החג', 'תפאורה ואביזרים', 'תאורה והגברה'];
-const LINK_SECTION = 'קטעי קישור';
 const SETTINGS_KEYS = ['title', 'subtitle', 'date', 'time', 'place', 'thanks_title'];
-const TYPE_CLASSES = [
-  ['סרט', 'film'],
-  ['שיר', 'song'],
-  ['ריקוד', 'dance'],
-  ['ראפ', 'rap'],
-  ['הצג', 'play'],
-];
 const SIZE_LABELS = ['רגיל', 'גדול', 'גדול מאוד'];
 
 /* ---------- CSV ---------- */
@@ -92,42 +83,15 @@ function buildModel(tabs) {
     if (SETTINGS_KEYS.includes(key)) settings[key] = get(rec, 'value');
   }
 
+  // One card per row, in sheet order.
   const program = toRecords(tabs.program)
     .filter((r) => get(r, 'title'))
-    .map((r, idx) => ({
-      order: get(r, 'order'),
-      sortKey: Number.isFinite(parseFloat(get(r, 'order'))) ? parseFloat(get(r, 'order')) : Infinity,
-      idx,
+    .map((r) => ({
       title: get(r, 'title'),
-      type: get(r, 'type'),
-      leads: get(r, 'leads'),
-      song: get(r, 'song'),
-      description: get(r, 'description'),
-    }))
-    .sort((a, b) => a.sortKey - b.sortKey || a.idx - b.idx);
-
-  // Participants grouped by section, ordered like the program, link segments last.
-  const bySection = new Map();
-  for (const r of toRecords(tabs.participants)) {
-    const name = get(r, 'name');
-    if (!name) continue;
-    const section = get(r, 'section') || LINK_SECTION;
-    if (!bySection.has(section)) bySection.set(section, []);
-    bySection.get(section).push({ name, role: get(r, 'role') });
-  }
-  const programOrder = program.map((p) => p.title);
-  const rank = (s) => {
-    if (s === LINK_SECTION) return Infinity;
-    const i = programOrder.indexOf(s);
-    return i === -1 ? programOrder.length : i;
-  };
-  const programByTitle = new Map(program.map((p) => [p.title, p]));
-  const participants = [...bySection.entries()]
-    .map(([section, people], idx) => {
-      const item = programByTitle.get(section); // gives the group its program number
-      return { section, people, idx, order: item ? item.order : '' };
-    })
-    .sort((a, b) => rank(a.section) - rank(b.section) || a.idx - b.idx);
+      name: get(r, 'name'),
+      credits: get(r, 'credits'),
+      participants: get(r, 'participants'),
+    }));
 
   // Team: the three known groups in fixed order, anything else appended.
   const byGroup = new Map(TEAM_GROUPS.map((g) => [g, []]));
@@ -148,7 +112,7 @@ function buildModel(tabs) {
     .filter((r) => get(r, 'song'))
     .map((r) => ({ song: get(r, 'song'), credits: get(r, 'credits'), lyrics: get(r, 'lyrics') }));
 
-  return { settings, program, participants, team, thanks, lyrics };
+  return { settings, program, team, thanks, lyrics };
 }
 
 /* ---------- Loading ---------- */
@@ -207,24 +171,6 @@ function el(tag, className, text) {
   return node;
 }
 
-function typeKey(type) {
-  const match = TYPE_CLASSES.find(([word]) => (type || '').includes(word));
-  return match ? match[1] : 'other';
-}
-
-function typeClass(type) {
-  return `tag tag--${typeKey(type)}`;
-}
-
-// Program number ("01"); all numbers share one color (--num-color).
-function programNum(className, order) {
-  return el('span', className, order ? String(order).padStart(2, '0') : '');
-}
-
-function personText(p) {
-  return p.role ? `${p.name} - ${p.role}` : p.name;
-}
-
 // Builds an accordion card: <li><hN><button aria-expanded>head</button></hN><div panel hidden/></li>.
 // If panel is null the card is static (no button).
 let uid = 0;
@@ -265,48 +211,34 @@ function renderHeader(settings) {
   }
 }
 
+// Fold content: a line ending in ":" or "-" is a label ("שירה:", "להקת הבית-"),
+// and the lines after it are a list of names.
+function foldPanel(text) {
+  const panel = el('div', 'program-fold');
+  let list = null;
+  for (const line of text.split('\n').map((l) => l.trim()).filter(Boolean)) {
+    if (/[:-]$/.test(line)) {
+      panel.append(el('p', 'fold-label', line));
+      list = null;
+    } else {
+      if (!list) panel.append(list = el('ul', 'name-list'));
+      list.append(el('li', null, line));
+    }
+  }
+  return panel;
+}
+
 function renderProgram(program) {
   const list = document.getElementById('program-list');
   for (const item of program) {
     const head = el('span', 'program-head');
-    head.append(programNum('program-num', item.order));
-    const main = el('span', 'program-main');
-    main.append(el('span', 'card-title', item.title));
-    const meta = el('span', 'program-meta');
-    if (item.type) meta.append(el('span', typeClass(item.type), item.type));
-    if (item.leads) meta.append(el('span', 'program-leads', item.leads));
-    if (meta.childNodes.length) main.append(meta);
-    if (item.song) {
-      const song = el('span', 'program-song');
-      song.append(el('span', 'visually-hidden', 'שיר: '), document.createTextNode(`♪ ${item.song}`));
-      main.append(song);
-    }
-    head.append(main);
-
-    const panel = item.description ? el('div', null) : null;
-    if (panel) panel.append(el('p', 'program-desc', item.description));
+    head.append(el('span', 'card-title', item.title));
+    if (item.name) head.append(el('span', 'program-name', item.name));
+    if (item.credits) head.append(el('span', 'program-credits', item.credits));
+    const panel = item.participants ? foldPanel(item.participants) : null;
     list.append(accordionCard(head, panel, 'program-card'));
   }
   return program.length > 0;
-}
-
-function renderParticipants(participants) {
-  const list = document.getElementById('participants-list');
-  for (const group of participants) {
-    const head = el('span', 'participants-head');
-    head.append(programNum('participants-num', group.order)); // empty for link segments, keeps titles aligned
-    head.append(el('span', 'card-title', group.section));
-    const count = el('span', 'count', String(group.people.length));
-    count.setAttribute('aria-label', `${group.people.length} משתתפים`);
-    head.append(count);
-
-    const panel = el('div', null);
-    const ul = el('ul', 'name-list');
-    for (const p of group.people) ul.append(el('li', null, personText(p)));
-    panel.append(ul);
-    list.append(accordionCard(head, panel, 'participants-card'));
-  }
-  return participants.length > 0;
 }
 
 function renderTeam(team) {
@@ -360,7 +292,6 @@ function showSection(id, hasContent) {
 function render(model) {
   renderHeader(model.settings);
   showSection('program', renderProgram(model.program));
-  showSection('participants', renderParticipants(model.participants));
   showSection('team', renderTeam(model.team));
   showSection('thanks', renderThanks(model.thanks));
   showSection('lyrics', renderLyrics(model.lyrics));

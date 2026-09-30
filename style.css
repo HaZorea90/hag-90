@@ -28,16 +28,6 @@
   --card-border: transparent;
   --nav-active-bg: #1c3563;
   --focus: #94c3bc;
-  --num-color: #6db0ff; /* all program and participant numbers */
-
-  /* Program types: tag background / tag text */
-  --tag-film-bg: #284e90;  --tag-film-fg: #f6f2ea;
-  --tag-song-bg: #94c3bc;  --tag-song-fg: #091120;
-  --tag-dance-bg: rgb(148 195 188 / 0.16); --tag-dance-fg: #94c3bc;
-  --tag-rap-bg: #6db0ff;   --tag-rap-fg: #091120;
-  --tag-play-bg: #f6f2ea;  --tag-play-fg: #284e90;
-  --tag-other-bg: rgb(109 176 255 / 0.16); --tag-other-fg: #9fcaff;
-  --tag-border: transparent;
 
   /* Typography (html is 18px, so 1rem = 18px) */
   --font-body: 'Heebo', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
@@ -46,7 +36,6 @@
   --fs-sm: 0.8333rem;   /* 15px label */
   --fs-base: 1rem;      /* 18px body */
   --fs-md: 1.1111rem;   /* 20px card title */
-  --fs-lg: 1.3333rem;   /* 24px program number */
   --fs-xl: 1.7778rem;   /* 32px hero subtitle */
   --fs-section: 1.4444rem; /* 26px section headings */
   --fs-hero: clamp(2rem, 9vw, 2.6667rem);
@@ -100,15 +89,6 @@
   --card-border: #e2dbcc;
   --nav-active-bg: #dfe9f7;
   --focus: #284e90;
-  --num-color: #284e90;
-
-  --tag-film-bg: #284e90;  --tag-film-fg: #ffffff;
-  --tag-song-bg: #d5e9e5;  --tag-song-fg: #1f4f48;
-  --tag-dance-bg: #e3eefc; --tag-dance-fg: #1d4a86;
-  --tag-rap-bg: #091120;   --tag-rap-fg: #f6f2ea;
-  --tag-play-bg: #94c3bc;  --tag-play-fg: #091120;
-  --tag-other-bg: #ebe4d6; --tag-other-fg: #3f4c63;
-  --tag-border: rgb(0 0 0 / 0.06);
 
   --shadow-card: 0 1px 3px rgb(9 17 32 / 0.05);
   --shadow-header: 0 2px 12px rgb(9 17 32 / 0.07);
@@ -305,7 +285,7 @@ a { color: var(--accent); }
   transition: opacity 0.2s ease;
 }
 
-/* Bottom bar: sized in px on purpose – it is app chrome and must fit five tabs at 320px
+/* Bottom bar: sized in px on purpose – it is app chrome and must fit all four tabs at 320px
    at every text-size level. */
 .bottomnav {
   position: fixed;
@@ -465,70 +445,18 @@ main { padding-block: var(--space-4) var(--space-6); }
   line-height: 1.35;
 }
 
-/* Program */
-.program-head { display: flex; align-items: flex-start; gap: var(--space-3); }
-.program-num {
-  flex-shrink: 0;
-  min-width: 2.25rem;
-  color: var(--num-color);
-  font-size: var(--fs-lg);
-  font-weight: 700;
-  line-height: 1.2;
-  font-variant-numeric: tabular-nums;
-}
-.program-main { display: flex; flex-direction: column; gap: var(--space-1); min-width: 0; }
-.program-meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-1) var(--space-2);
+/* Program: title, segment name, credits; the fold lists who took part */
+.program-head { display: flex; flex-direction: column; gap: var(--space-1); }
+.program-name { color: var(--accent-warm); font-weight: 500; line-height: 1.4; }
+.program-credits {
   color: var(--text-muted);
   font-size: var(--fs-sm);
+  line-height: 1.5;
+  white-space: pre-line;
 }
-.program-song { color: var(--text-muted); font-size: var(--fs-sm); }
-.program-desc { padding-inline-start: calc(2.25rem + var(--space-3)); color: var(--text); }
+.program-fold { display: grid; gap: var(--space-2); }
+.fold-label { color: var(--text-muted); font-size: var(--fs-sm); font-weight: 500; }
 
-.tag {
-  display: inline-block;
-  padding: 0 var(--space-2);
-  border: 1px solid var(--tag-border);
-  border-radius: var(--radius-pill);
-  background: var(--tag-bg);
-  color: var(--tag-fg);
-  font-size: var(--fs-sm);
-  font-weight: 600;
-  line-height: 1.6;
-}
-.tag--film  { --tag-bg: var(--tag-film-bg);  --tag-fg: var(--tag-film-fg); }
-.tag--song  { --tag-bg: var(--tag-song-bg);  --tag-fg: var(--tag-song-fg); }
-.tag--dance { --tag-bg: var(--tag-dance-bg); --tag-fg: var(--tag-dance-fg); }
-.tag--rap   { --tag-bg: var(--tag-rap-bg);   --tag-fg: var(--tag-rap-fg); }
-.tag--play  { --tag-bg: var(--tag-play-bg);  --tag-fg: var(--tag-play-fg); }
-.tag--other { --tag-bg: var(--tag-other-bg); --tag-fg: var(--tag-other-fg); }
-
-/* Participants */
-.participants-head { display: flex; align-items: center; gap: var(--space-2); }
-.participants-head .card-title { flex: 1; min-width: 0; }
-.participants-num {
-  flex-shrink: 0;
-  min-width: 1.75rem;
-  color: var(--num-color);
-  font-size: var(--fs-md);
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-}
-.count {
-  flex-shrink: 0;
-  min-width: 2rem;
-  padding: 0 var(--space-2);
-  border-radius: var(--radius-pill);
-  background: var(--surface-3);
-  color: var(--text);
-  font-size: var(--fs-sm);
-  font-weight: 700;
-  text-align: center;
-  font-variant-numeric: tabular-nums;
-}
 .name-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 10rem), 1fr));

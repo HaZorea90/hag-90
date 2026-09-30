@@ -319,9 +319,9 @@ function initTheme() {
   const apply = (theme) => {
     root.dataset.theme = theme;
     btn.setAttribute('aria-label', theme === 'dark' ? 'מעבר למצב בהיר' : 'מעבר למצב כהה');
-    meta.setAttribute('content', getComputedStyle(root).getPropertyValue('--bg').trim() || '#091120');
+    meta.setAttribute('content', getComputedStyle(root).getPropertyValue('--bg').trim() || '#f6f2ea');
   };
-  apply(storeGet('hz90-theme') === 'light' ? 'light' : 'dark');
+  apply(storeGet('hz90-theme') === 'dark' ? 'dark' : 'light'); // light is the default (user, 2026-09-30)
   btn.addEventListener('click', () => {
     const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
     apply(next);

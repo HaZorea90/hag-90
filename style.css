@@ -467,21 +467,25 @@ main { padding-block: var(--space-4) var(--space-6); }
 .role { color: var(--text-muted); }
 
 /* Team */
+/* Columns rather than a grid: cards flow down each column, so the short cards sit beside the long
+   set-design list instead of leaving a gap under it. */
 .team-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
-  gap: var(--space-3);
-  align-items: start;
+  columns: 3 13rem;
+  column-gap: var(--space-3);
 }
-.team-group { padding: var(--space-4); }
+.team-group {
+  break-inside: avoid;
+  margin-block-end: var(--space-3);
+  padding: var(--space-4);
+}
 .team-title {
   margin-block-end: var(--space-2);
   color: var(--accent);
   font-size: var(--fs-md);
   font-weight: 700;
 }
-.team-group:nth-child(1) .team-title { color: var(--accent-warm); }
-.team-group:nth-child(2) .team-title { color: var(--accent-alt); }
+.team-group:nth-child(3n + 1) .team-title { color: var(--accent-warm); }
+.team-group:nth-child(3n + 2) .team-title { color: var(--accent-alt); }
 
 /* Thanks */
 .thanks-body { display: grid; gap: var(--space-3); padding: var(--space-4); }

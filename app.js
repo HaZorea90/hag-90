@@ -19,7 +19,7 @@ const CONFIG = {
 };
 /* CONFIG-END */
 
-const TEAM_GROUPS = ['צוות החג', 'תפאורה ואביזרים', 'תאורה והגברה'];
+const TEAM_GROUPS = ['צוות החג', 'תפאורה', 'אביזרים', 'תאורה והגברה', 'הפקה'];
 const SETTINGS_KEYS = ['title', 'subtitle', 'date', 'time', 'place', 'thanks_title'];
 const SIZE_LABELS = ['רגיל', 'גדול', 'גדול מאוד'];
 

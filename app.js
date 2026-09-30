@@ -248,7 +248,8 @@ function renderTeam(team) {
     box.append(el('h3', 'team-title', group));
     const ul = el('ul', 'name-list');
     for (const p of people) {
-      const li = el('li', null, p.name);
+      // A name ending in ":" is a small label inside the list ("בעזרה של:").
+      const li = el('li', p.name.endsWith(':') ? 'list-label' : null, p.name);
       if (p.role) li.append(el('span', 'role', ` - ${p.role}`));
       ul.append(li);
     }

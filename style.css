@@ -455,13 +455,15 @@ main { padding-block: var(--space-4) var(--space-6); }
   white-space: pre-line;
 }
 .program-fold { display: grid; gap: var(--space-2); }
-.fold-label { color: var(--text-muted); font-size: var(--fs-sm); font-weight: 500; }
+.fold-label,
+.list-label { color: var(--text-muted); font-size: var(--fs-sm); font-weight: 500; }
 
 .name-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 10rem), 1fr));
   gap: var(--space-1) var(--space-4);
 }
+.list-label { grid-column: 1 / -1; margin-block-start: var(--space-2); }
 .role { color: var(--text-muted); }
 
 /* Team */
